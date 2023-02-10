@@ -8,9 +8,24 @@ import 'bootstrap/dist/css/bootstrap.css';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <div>
+      <App />
+    </div>
+
   </React.StrictMode>
 );
+
+setTimeout(CharacterSearchInput, 30)
+
+function CharacterSearchInput() {
+  const characterInputField = document.getElementById('characterinput')
+  const characterSearchButton = document.getElementById('characterSearchButton')
+
+  characterSearchButton.addEventListener('click', () => {
+    const characterInput = characterInputField.value
+    console.log(characterInput)
+  })
+}
 
 
 
