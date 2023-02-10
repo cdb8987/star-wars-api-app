@@ -6,6 +6,7 @@ import RequestTenCharacters from './characterTable.js';
 import background from "./starwars_background.jfif"
 import CharacterSearch from './CharacterSearch';
 import MyHeader from './MyHeader';
+import SearchResultsPageNavBar from './SearchResultsPageNavBar.js'
 
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
       <MyHeader />
       <CharacterSearch />
       <RequestTenCharacters />
+      <SearchResultsPageNavBar />
 
     </div>
   );
