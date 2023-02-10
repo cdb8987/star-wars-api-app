@@ -1,5 +1,12 @@
 import axios from "axios"
 
+
+
+
+
+
+
+
 // function RequestCharacter(startingPoint = 1, complete = finalizeCharacterTable) {
 //     let characterTable = [];
 //     for (let i = 1; i <= 10; i++) {

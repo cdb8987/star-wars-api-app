@@ -24,6 +24,8 @@ function CharacterSearchInput() {
   characterSearchButton.addEventListener('click', () => {
     const characterInput = characterInputField.value
     console.log(characterInput)
+    characterInputField.value = ''
+
   })
 }
 
