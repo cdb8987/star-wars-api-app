@@ -13,7 +13,11 @@ root.render(
     </div>
 
   </React.StrictMode>
-);
+)
+document.body.style.backgroundColor = 'grey'
+
+
+
 
 let firstCharacterIndexNumber = 1
 
