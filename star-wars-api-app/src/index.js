@@ -20,7 +20,9 @@ document.body.style.backgroundColor = 'grey'
 let firstCharacterIndexNumber = 1 //Setting Reference point for API call to iterate from
 
 
-setTimeout(() => { CharacterSearchInput(), addEventListenertoPageButtons() }, 30)
+// setTimeout(() => { CharacterSearchInput(), addEventListenertoPageButtons() }, 30)
+setTimeout(CharacterSearchInput, 30)
+setTimeout(addEventListenertoPageButtons, 30)
 
 function CharacterSearchInput() {
   const characterInputField = document.getElementById('characterinput')
