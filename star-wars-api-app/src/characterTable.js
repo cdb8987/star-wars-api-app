@@ -22,13 +22,14 @@ function RequestCharacter(startingPoint = 1, complete = finalizeCharacterTable) 
             .then(tr => {
                 const homeworld = axios.get(`${tr[4]}`);
                 const species = axios.get(`${tr[5]}`);
+                console.log([tr, homeworld, species.name])
                 return [tr, homeworld, species]
             })
             .then(tr => {
 
                 tr[0][4] = tr[1];
                 tr[0][5] = tr[2];
-                console.log('Then Statement 3: table row  is', tr);
+                // console.log('Then Statement 3: table row  is', tr);
             })
 
             .catch(error => { console.log(`ERROR! ${error}`) })
@@ -81,3 +82,50 @@ function RequestTenCharacters() {
 }
 
 export default RequestTenCharacters
+
+
+
+
+function getJSON(url) {
+    return fetch(url)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('CUSTOM ERROR - JSON/API Request failed')
+            };
+            return response.json()
+        })
+        .then(response => {
+            console.log(response);
+            return response
+        })
+        .catch(error => { console.log(`ERROR! ${error}`) })
+}
+
+//TEST ENVIRONMENT GETTING SINGLE CHARACTER
+
+function getCharacter() {
+    let characterProfile = []
+
+    getJSON('https://swapi.dev/api/people/2/')
+        .then((profile) => {
+            console.log(profile)
+            characterProfile = [profile.name, profile.birth_year, profile.height, profile.mass];
+
+            getJSON(profile.homeworld)
+                .then((homeworld) => {
+                    console.log(profile.name, ' has a homeworld of ', homeworld.name)
+                    characterProfile[4] = homeworld.name
+                    getJSON(profile.species)
+                        .then((homeworld) => {
+                            console.log(profile.name, ' has a species of ', species.name)
+                            characterProfile[5] = species.name
+                            console.log('final profile is', characterProfile)
+
+                        })
+
+                })
+        })
+
+}
+
+getCharacter()
