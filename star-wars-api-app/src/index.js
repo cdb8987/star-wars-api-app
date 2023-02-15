@@ -17,10 +17,8 @@ root.render(
 )
 document.body.style.backgroundColor = 'grey'
 
+let firstCharacterIndexNumber = 1 //Setting Reference point for API call to iterate from
 
-
-
-let firstCharacterIndexNumber = 1
 
 setTimeout(() => { CharacterSearchInput(), addEventListenertoPageButtons() }, 30)
 
@@ -30,16 +28,19 @@ function CharacterSearchInput() {
   characterSearchButton.addEventListener('click', () => {
     const characterInput = characterInputField.value
     console.log(characterInput)
+    document.getElementById('tbody').innerHTML = ''
+    getSearchResults(characterInput)
+
     characterInputField.value = ''
   })
 }
 
 function addEventListenertoPageButtons() {
   const pages = document.getElementById('SearchResultsPageNavBar').childNodes
-  console.log(pages)
+
   pages.forEach(child => child.addEventListener('click', () => {
     firstCharacterIndexNumber = Number(String(Number(child.textContent) - 1) + 1);
-    console.log(`Go to page ${firstCharacterIndexNumber}`);
+
     document.getElementById('tbody').innerHTML = ''
     RequestTenCharacters(firstCharacterIndexNumber)
   }))
@@ -56,7 +57,7 @@ function getJSON(url) {
       return response.json()
     })
     .then(response => {
-      // console.log(response);
+
       return response
     })
     .catch(error => { console.log(`ERROR! ${error}`) })
@@ -79,27 +80,20 @@ function getCharacter(url) {
               .then((species) => {
                 if (!species) {
                   characterProfile[5] = 'unknown'
-                  console.log('final DROID profile is', characterProfile)
-
                   return characterProfile
                 }
-
                 characterProfile[5] = species.name
-                console.log('final profile is', characterProfile)
                 addTableRow(characterProfile)
-
               })
           }
           else {
             characterProfile[5] = 'unknown'
-            console.log('final HUMAN profile is', characterProfile)
             addTableRow(characterProfile)
             return characterProfile
           }
-
         })
     })
-
+    .catch(err => console.log(err))
 }
 
 const addTableRow = function (characterArray) {
@@ -114,20 +108,15 @@ const addTableRow = function (characterArray) {
           <td>${characterArray[5]}</td>
       </tr>
   `
-  console.log('tablerow is', tableRow)
-
   if (!tableBody) {
     tableBody.innerHTML = tableRow
   }
   else {
     tableBody.insertAdjacentHTML('beforeend', tableRow)
   }
-
 }
 
-
 const RequestTenCharacters = function (startingindex) {
-  // document.getElementById('tbody').innerHTML;
   for (let i = startingindex; i < startingindex + 10; i++) {
     getCharacter(`https://swapi.dev/api/people/${i}/`)
   }
@@ -137,12 +126,15 @@ RequestTenCharacters(1)
 
 
 
+const getSearchResults = function (searchstring) {
+
+  getJSON(`https://swapi.dev/api/people/?search=${searchstring}`)
+    .then(result => {
+      console.log(result.results);
+      result.results.forEach(char => getCharacter(char.url))
+    })
+}
 
 
 
-
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
